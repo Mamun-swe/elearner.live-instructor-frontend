@@ -1,0 +1,77 @@
+@import "../App.scss";
+
+.dashboard {
+    .card-1 {
+        h1 {
+            color: #000;
+            font-family: Barlow-Bold;
+
+            span {
+                font-size: 18px;
+                font-family: Barlow-Medium;
+            }
+        }
+
+        p {
+            font-size: 20px;
+            color: $primary-color;
+            font-family: Barlow-Medium;
+        }
+
+        .rating-icon {
+            color: $primary-color;
+        }
+
+        @media (min-width: 992px) {
+            padding: 50px 40px;
+            height: 281px;
+        }
+    }
+
+    .personal-info {
+        .table {
+            tbody {
+                tr {
+                    td {
+                        padding-bottom: 0;
+                        font-size: 14px;
+                        font-family: Barlow-Regular;
+                    }
+                }
+            }
+        }
+    }
+
+    .payment-details {
+        .table {
+            thead {
+                tr {
+                    td {
+                        color: #000;
+                        font-size: 16px;
+                        font-family: Barlow-Medium;
+                    }
+                }
+            }
+
+            tbody {
+                tr {
+                    border-bottom: 1px solid #dfdfdf;
+
+                    td {
+                        font-size: 14px;
+                        padding-top: 8px;
+                        padding-bottom: 8px;
+                        font-family: Barlow-Regular;
+                    }
+                }
+            }
+        }
+
+        .total-payment {
+            p {
+                font-family: Barlow-Medium;
+            }
+        }
+    }
+}

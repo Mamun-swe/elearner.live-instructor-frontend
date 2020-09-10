@@ -1,0 +1,41 @@
+@import "bootstrap/scss/bootstrap";
+
+$primary-color: #fc5632;
+$secondary-color: #dfdfdf8f;
+
+@font-face {
+    font-family: Barlow-Regular;
+    src: url("./assets/fonts/Barlow-Regular.ttf");
+}
+
+@font-face {
+    font-family: Barlow-Medium;
+    src: url("./assets/fonts/Barlow-Medium.ttf");
+}
+
+@font-face {
+    font-family: Barlow-Bold;
+    src: url("./assets/fonts/Barlow-Bold.ttf");
+}
+
+/* Flex Center Box */
+
+.flex-center {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 100%;
+}
+
+.flex-column {
+    -ms-flex-direction: column !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-box-direction: normal !important;
+    flex-direction: column !important;
+}
