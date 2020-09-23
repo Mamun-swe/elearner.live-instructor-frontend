@@ -7,3 +7,11 @@ export const checkIfLoggedIn = () => {
     }
     return false;
 };
+
+// Header
+export const header = {
+    headers:
+        {
+            Authorization: "Bearer " + localStorage.getItem("token")
+        }
+}

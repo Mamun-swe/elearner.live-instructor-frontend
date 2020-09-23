@@ -3,25 +3,32 @@ import "../../styles/Dashboard.scss";
 import { Icon } from 'react-icons-kit';
 import { star, starOutline, starHalf } from 'react-icons-kit/typicons';
 import axios from 'axios';
+import jwt_decode from "jwt-decode";
 import { apiURL } from '../../utils/apiURL';
+import { header } from '../../utils/Authenticate'
 
 const Index = () => {
     const [loading, setLoading] = useState(false)
-    const [payments, setPayments] = useState([])
+    const [instructorDetails, setInstructorDetails] = useState([])
 
     useEffect(() => {
-        const fatchDeshboardData = async () => {
+        const fetchDashboardData = async () => {
             try {
+               let token= localStorage.getItem("token")
+                if (token) {
+                const loggedUser = jwt_decode(token);
                 setLoading(true)
-                const response = await axios.get(`${apiURL}users`)
-                setPayments(response.data)
+                const response = await axios.get(`${apiURL}instructors/${loggedUser.userId}`,header)
+                console.log(response.data)
+                setInstructorDetails(response.data)
                 setLoading(false)
+                }
             } catch (error) {
                 /*TODO: 404-not found,500- unauthorized user*/
             }
         }
 
-        fatchDeshboardData()
+        fetchDashboardData()
     }, [])
     return (
         <div className="dashboard">
@@ -51,39 +58,36 @@ const Index = () => {
                                         <tbody>
                                             <tr>
                                                 <td>Id:</td>
-                                                <td>123</td>
+                                                <td>{instructorDetails.instructorId}</td>
                                             </tr>
                                             <tr>
                                                 <td>Name:</td>
-                                                <td>123</td>
+                                                <td>{instructorDetails.name}</td>
                                             </tr>
                                             <tr>
                                                 <td>Phone:</td>
-                                                <td>123</td>
+                                                <td>{instructorDetails.phoneNo}</td>
                                             </tr>
                                             <tr>
                                                 <td>E-mail:</td>
-                                                <td>123</td>
+                                                <td>{instructorDetails.email}</td>
                                             </tr>
                                             <tr>
-                                                <td>Id:</td>
-                                                <td>123</td>
+                                                <td>Profile Active Status</td>
+                                                {instructorDetails.isActive === true?<td>True</td>:<td>False</td>}
+
                                             </tr>
                                             <tr>
                                                 <td>Join Date:</td>
-                                                <td>123</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Complete Course:</td>
-                                                <td>123</td>
+                                                <td>none</td>
                                             </tr>
                                             <tr>
                                                 <td>Qualification:</td>
-                                                <td>123</td>
+                                                <td>none</td>
                                             </tr>
                                             <tr>
                                                 <td>Review:</td>
-                                                <td>123</td>
+                                                <td>none</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -105,7 +109,7 @@ const Index = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {payments.length > 0 && payments.map((payment, i) =>
+                                            {instructorDetails.length > 0 && instructorDetails.map((payment, i) =>
                                                 <tr key={i}>
                                                     <td>10 Sep, 2020</td>
                                                     <td>Web develop with JavaScript</td>
