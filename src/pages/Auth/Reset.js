@@ -1,42 +1,32 @@
 import React, { useState } from 'react';
-import "../../styles/Auth.scss";
-import { Link, useHistory } from 'react-router-dom';
+import '../../styles/Auth.scss';
+import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
-
+import { useHistory } from 'react-router-dom';
 import Logo from '../../assets/static/logo.png';
+import axios from "axios";
+import {apiURL} from "../../utils/apiURL";
 
-import axios from 'axios';
-import jwt_decode from "jwt-decode";
-import { apiURL } from '../../utils/apiURL';
-
-const Login = () => {
-    const history = useHistory()
+const Reset = () => {
     const { register, handleSubmit, errors } = useForm();
     const [loading, setLoading] = useState(false)
-    const [loginErr, setLoginErr] = useState()
-
-
+    const history = useHistory()
     const onSubmit = async data => {
+        setLoading(true)
         try {
             setLoading(true)
-            const response = await axios.post(`${apiURL}login`, data)
-            if (response.status === 200 && response.data.token) {
-                const user = jwt_decode(response.data.token)
-                if (user.scopes[0] === 'INSTRUCTOR') {
-                    localStorage.setItem("token", response.data.token)
-                    setLoading(false)
-                    history.push('/instructor')
-                }
+            const response = await axios.get(`${apiURL}reset/${data.email}`)
+            if (response.status === 200 ) {
+                history.push('/sent-email')
             }
         } catch (error) {
             //TODO: 404-email not found,500-wrong password
             if (error) {
                 setLoading(false)
-                setLoginErr('Invalid e-mail or password')
+
             }
         }
     }
-
 
     return (
         <div className="auth">
@@ -44,16 +34,18 @@ const Login = () => {
                 <div className="card border-0 shadow">
                     <div className="card-header">
                         <img src={Logo} className="img-fluid" alt="..." />
-                        {loginErr ? <p className="mb-0 mt-2 text-danger">{loginErr}</p> : null}
                     </div>
                     <div className="card-body">
                         <form onSubmit={handleSubmit(onSubmit)}>
+                            <p className="text-center">Just Enter e-mail.</p>
                             {/* Email */}
                             <div className="form-group mb-4">
+
                                 {errors.email && errors.email.message ? (
                                     <small className="text-danger">{errors.email && errors.email.message}</small>
                                 ) : <small>E-mail</small>
                                 }
+
                                 <input
                                     type="text"
                                     name="email"
@@ -69,35 +61,18 @@ const Login = () => {
                                 />
                             </div>
 
-                            {/* Password */}
-                            <div className="form-group mb-4">
-                                {errors.password && errors.password.message ? (
-                                    <small className="text-danger">{errors.password && errors.password.message}</small>
-                                ) : <small>Password</small>
-                                }
-                                <input
-                                    type="password"
-                                    name="password"
-                                    className="form-control shadow-none"
-                                    placeholder="*****"
-                                    ref={register({
-                                        required: "Please enter password",
-                                    })}
-                                />
-                            </div>
-
                             <button
                                 type="submit"
                                 className="btn btn-block shadow-none text-white"
                             >
                                 {loading ?
-                                    <span className="mb-0">Loading...</span> :
-                                    <span className="mb-0">Login</span>
+                                    <span>Loading...</span> :
+                                    <span>Submit</span>
                                 }
                             </button>
 
                             <div className="text-center mt-3">
-                                <Link to="/reset">Forgot password ?</Link>
+                                <Link to="/">Go to Login</Link>
                             </div>
                         </form>
                     </div>
@@ -107,4 +82,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Reset;

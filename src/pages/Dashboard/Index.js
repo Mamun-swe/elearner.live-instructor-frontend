@@ -10,26 +10,22 @@ const Index = () => {
     const [payments, setPayments] = useState([])
 
     useEffect(() => {
-        const fetchPaymment = async () => {
+        const fatchDeshboardData = async () => {
             try {
                 setLoading(true)
                 const response = await axios.get(`${apiURL}users`)
                 setPayments(response.data)
                 setLoading(false)
             } catch (error) {
-                console.log(error);
+                /*TODO: 404-not found,500- unauthorized user*/
             }
         }
 
-        fetchPaymment()
+        fatchDeshboardData()
     }, [])
     return (
-
-
-
         <div className="dashboard">
-            {loading ? <p>Loading...</p> :
-
+            {/*TODO: MUST BE ADD LOADER*/}
                 <div className="container-fluid">
                     <div className="row">
 
@@ -128,8 +124,6 @@ const Index = () => {
 
                     </div>
                 </div>
-
-            }
         </div>
     );
 };

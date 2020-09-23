@@ -6,6 +6,8 @@ import ScrollToTop from './components/ScrollToTop';
 import PrivateRoute from './components/PrivateRoute';
 
 import LoginPage from './pages/Auth/Login';
+import CheckMail from './pages/Auth/CheckMail';
+import Reset from './pages/Auth/Reset';
 import MasterPage from './pages/Master';
 import FourOFourPage from './pages/FourOFour/Index';
 
@@ -16,6 +18,8 @@ function App() {
         <ScrollToTop>
           <Switch>
             <Route exact path="/" component={LoginPage} />
+            <Route exact path="/reset" component={Reset} />
+            <Route exact path="/sent-email" component={CheckMail} />
             <PrivateRoute path="/instructor">
               <MasterPage />
             </PrivateRoute>
